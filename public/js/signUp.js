@@ -123,14 +123,10 @@ form.addEventListener("submit", (event) => {
   ) {
     event.preventDefault();
     alert("Please fill in the required text field.");
-  }
-
-  if (user1OK == false || user2OK == false) {
+  } else if (user1OK == false || user2OK == false) {
     event.preventDefault();
     alert("Choose a valid username!!");
-  }
-
-  if (pass1OK == false || pass2OK == false) {
+  } else if (pass1OK == false || pass2OK == false) {
     event.preventDefault();
     alert("Choose a valid password!!");
     field3.value = "";
@@ -144,5 +140,5 @@ form.addEventListener("submit", (event) => {
     field4.value = "";
     charsCheck.style.color = "red";
     symCheck.style.color = "red";
-  }
+  } 
 });
