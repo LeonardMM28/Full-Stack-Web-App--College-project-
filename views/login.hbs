@@ -1,9 +1,9 @@
-<html lang="en" class="index">
+<html class="login" lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Main Menu</title>
+    <title>Login</title>
     <link rel="stylesheet" type="text/css" href="../public/css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -11,28 +11,41 @@
       href="https://fonts.googleapis.com/css2?family=Righteous&display=swap"
       rel="stylesheet"
     />
-    <script defer src="../public/js/index.js"></script>
+    <script defer src="../public/js/alert.js"></script>
+
   </head>
-  <body class="ind">
+  <body class="log">
     <header>
-      <h1>Welcome to the Main Page</h1>
+      <h1>Login user</h1>
+      {{#if (nonEmptyObject messages)}}
+        <div id="flashMess">
+          {{#if messages.error}}
+            <div class="alert-danger">{{messages.error}}</div>
+           {{else}}
+            <div class="alert-success">{{messages.success}}</div>
+          {{/if}}
+        </div>
+      {{/if}}
       <div class="dropdown">
         <button class="dropbtn">
           <img src="../public/images/menuH.png" alt="menu" class="menImg" />
+          <i class="caret-down"></i>
         </button>
         <div class="dropContent">
-
           {{#if isLoggedIn}}
             <nav>
               <ul>
                 <li>
-                  <a href="/postVideo" class="a1">Post a video</a>
+                  <a href="/" class="a1">Main Page</a>
                 </li>
                 <li>
-                  <a href="/viewPost" class="a2">View post</a>
+                  <a href="/postVideo" class="a2">Post a video</a>
                 </li>
                 <li>
-                  <a href="/profile" class="a3">Profile</a>
+                  <a href="/viewPost" class="a3">View post</a>
+                </li>
+                <li>
+                  <a href="/profile" class="a4">Profile</a>
                 </li>
               </ul>
             </nav>
@@ -40,7 +53,7 @@
             <nav>
               <ul>
                 <li>
-                  <a href="/login" class="a1">Login</a>
+                  <a href="/" class="a1">Main Page</a>
                 </li>
                 <li>
                   <a href="/signUp" class="a2">Sign up</a>
@@ -49,40 +62,36 @@
             </nav>
           {{/if}}
         </div>
-
       </div>
     </header>
-    {{#if isLoggedIn}}
-      <form action="/users/logout" method="post" class="logO">
-        <button type="submit">Log Out</button>
-      </form>
-    {{/if}}
     <main>
       <div class="menButton">
         <input type="checkbox" id="active" />
         <label for="active" class="menu-btn"><span></span></label>
         <label for="active" class="close"></label>
         <div class="wrapper">
-
           {{#if isLoggedIn}}
-            <nav id="buttons">
+            <nav>
               <ul>
                 <li>
-                  <a href="/postVideo" class="a1">Post a video</a>
+                  <a href="/" class="a1">Main Page</a>
                 </li>
                 <li>
-                  <a href="/viewPost" class="a2">View post</a>
+                  <a href="/postVideo" class="a2">Post a video</a>
                 </li>
                 <li>
-                  <a href="/profile" class="a3">Profile</a>
+                  <a href="/viewPost" class="a3">View post</a>
+                </li>
+                <li>
+                  <a href="/profile" class="a4">Profile</a>
                 </li>
               </ul>
             </nav>
           {{else}}
-            <nav id="buttons">
+            <nav>
               <ul>
                 <li>
-                  <a href="/login" class="a1">Login</a>
+                  <a href="/" class="a1">Main Page</a>
                 </li>
                 <li>
                   <a href="/signUp" class="a2">Sign up</a>
@@ -90,13 +99,35 @@
               </ul>
             </nav>
           {{/if}}
-
         </div>
       </div>
-      <div id="content">
-
+      <div class="inputs">
+        <form
+          action="/users/login"
+          method="post"
+          enctype="application/x-www-form-urlencoded"
+        >
+          <span>
+            <div class="user">
+              <div>
+                <label for="username">Username:</label>
+              </div>
+              <div>
+                <input type="text" name="username" id="username" />
+              </div>
+            </div>
+            <div class="pass">
+              <div>
+                <label for="password">Password:</label>
+              </div>
+              <div>
+                <input type="password" name="password" id="password" />
+              </div>
+            </div>
+          </span>
+          <input type="submit" name="Login" id="Login" />
+        </form>
       </div>
-      <div id="No"></div>
     </main>
     <footer>
       <h3>Leonardo Meza Martinez © 2023 CS SFSU</h3>
