@@ -1,0 +1,140 @@
+<html class="video" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post a video</title>
+    <link rel="stylesheet" type="text/css" href="../public/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Righteous&display=swap"
+      rel="stylesheet"
+    />
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+  </head>
+  <body class="postVideo">
+    <header>
+      <h1>Post a video</h1>
+      <div class="dropdown">
+        <button class="dropbtn">
+          <img src="../public/images/menuH.png" alt="menu" class="menImg" />
+          <i class="caret-down"></i>
+        </button>
+        <div class="dropContent">
+          <nav>
+            <ul>
+              <li>
+                <a href="/" class="a1">Main Page</a>
+              </li>
+              <li>
+                <a href="/users/profile/{{user.userId}}" class="a2">Profile</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+    {{#if isLoggedIn}}
+      <form action="/users/logout" method="post" class="logO">
+      <img id="avatar" src="/{{user.image}}" alt="Avatar">
+      <h2>Logged as {{user.username}}</h2>
+        <button type="submit">Log Out</button>
+      </form>
+    {{else}}
+    <form action="#" method="post" class="logO" id="logIN">
+        <button type="submit"><a href="/login">Login</a></button>
+      </form>
+    {{/if}}
+    <main>
+      <div class="menButton">
+        <input type="checkbox" id="active" />
+        <label for="active" class="menu-btn"><span></span></label>
+        <label for="active" class="close"></label>
+        <div class="wrapper">
+          <nav>
+            <ul>
+              <li>
+                <a href="/" class="a1">Main Page</a>
+              </li>
+              <li>
+                <a href="/users/profile/{{user.userId}}" class="a2">Profile</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <form
+        id="postInfo"
+        action="/posts/create"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <div class="postInfo">
+          <div class="title">
+            <div>
+              <label for="title">Post title:</label>
+            </div>
+            <div>
+              <input
+                type="text"
+                name="title"
+                id="title"
+                placeholder="Write the title"
+                required
+              />
+            </div>
+            <div class="switch-holderNP">
+              <div class="switch-label">
+                <span>Private</span>
+              </div>
+              <div class="switch-toggle">
+                <input type="checkbox" id="bluetooth" name="private" value="1"/>
+                <label for="bluetooth"></label>
+              </div>
+            </div>
+          </div>
+          <div class="descrip">
+            <div>
+              <label for="description">Description:</label>
+            </div>
+            <div>
+              <input
+                name="description"
+                id="description"
+                placeholder="Write a short description"
+                required
+              />
+            </div>
+          </div>
+          <div>
+            <div class="file">
+              <div>
+                <label for="file">Select your video:</label>
+              </div>
+              <div>
+                <input type="file" name="file" id="file" required />
+              </div>
+            </div>
+            <h2>(Only video formats supported by the HTML5 player)</h2>
+          </div>
+          <div class="checkB">
+            <div class="policy">
+              <label for="check">Accept Acceptable Use Policy for uploading
+                videos:</label>
+              <input type="checkbox" name="check" id="check" required />
+            </div>
+
+          </div>
+
+          <button><i id="editSub" class="fa-solid fa-file-import"> </i></button>
+
+        </div>
+      </form>
+    </main>
+    {{> footer}}
+  </body>
+</html>

@@ -1,0 +1,163 @@
+<html class="profile" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <link rel="stylesheet" type="text/css" href="../../public/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Righteous&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <script defer src="../../public/js/alert.js"></script>
+  </head>
+  <body class="profile">
+    <header>
+      <h1>Channel of {{authorName}}</h1>
+      <div class="dropdown">
+        <button class="dropbtn">
+          <img src="../../public/images/menuH.png" alt="menu" class="menImg" />
+          <i class="caret-down"></i>
+        </button>
+        <div class="dropContent">
+          <nav>
+            <ul>
+              <li>
+                <a href="/" class="a1">Main Page</a>
+              </li>
+              <li>
+                <a href="/postVideo" class="a2">Post a video</a>
+              </li>
+              <li>
+                <a href="/users/profile/{{user.userId}}" class="a3">Profile</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+    {{#if isLoggedIn}}
+      <form action="/users/logout" method="post" class="logO">
+      <img id="avatar" src="/{{user.image}}" alt="Avatar">
+      <h2>Logged as {{user.username}}</h2>
+        <button type="submit">Log Out</button>
+      </form>
+    {{else}}
+    <form action="#" method="post" class="logO" >
+        <button type="submit"><a href="/login">Login</a></button>
+      </form>
+    {{/if}}
+    </form>
+    <main>
+      <div class="menButton">
+        <input type="checkbox" id="active" />
+        <label for="active" class="menu-btn"><span></span></label>
+        <label for="active" class="close"></label>
+        <div class="wrapper">
+          <nav>
+            <ul>
+              <li>
+                <a href="/" class="a1">Main Page</a>
+              </li>
+              <li>
+                <a href="/postVideo" class="a2">Post a video</a>
+              </li>
+              <li>
+                <a href="/users/profile/{{user.userId}}" class="a3">Profile</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <div class="profInfo">
+<div class="inf">
+        <div class="avatar">
+          <img src="/{{avatar}}" alt="Avatar">
+        </div>
+        <div class="infMain">
+          <h2>{{authorName}}</h2>
+          <h3>{{authorEmail}}</h3>
+        </div>
+        </div>
+          <h4>Posts created:</h4>
+        <div class="videosProf">
+
+          {{#each posts}}
+            <div class="post">
+              <div class="videoInfo">
+                <img src="/{{thumbnail}}" alt="thumbnail">
+                
+                    <h2 class="video-title">{{title}}</h2>
+                    
+                <p class="video-time">{{formatDateString createdAt}}</p>
+                <div class="secL">
+                  <p class="video-description">{{description}}</p>
+                  <h2 class="views">{{views}} views</h2>
+                </div>
+              </div>
+              <div class="buttons">
+                <button class="watch-btn" data-postid={{id}} data-userid={{user.id}}><i
+                    class="fa-solid fa-play"
+                    id="watch-btn-main"
+                    data-postid={{id}}
+                  ></i></button>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    </main>
+    {{!-- {{> footer}} --}}
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+      var watchBtns = document.querySelectorAll("#watch-btn-main");
+      watchBtns.forEach(function (btn) { btn.addEventListener("click", function
+      (event) { var postId = event.target.getAttribute("data-postid"); var url =
+      "/posts/" + postId;
+       window.location.href = url; }); }); });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var deleteBtns = document.querySelectorAll("#delete-btn");
+    deleteBtns.forEach(function (btn) {
+      btn.addEventListener("click", function (event) {
+        var postId = event.target.getAttribute("data-postid");
+        var confirmed = confirm("Are you sure you want to delete this post?");
+        if (confirmed) {
+          fetch(`/posts/delete?id=${postId}`, { method: "DELETE" })
+            .then(function (response) {
+              if (response.ok) {
+                alert("Post deleted successfully.");
+                location.reload();
+              } else {
+                throw new Error("Delete request failed.");
+              }
+            })
+            .catch(function (error) {
+              console.error(error);
+              alert("An error occurred while deleting the post.");
+            });
+        }
+      });
+    });
+  });
+
+    const editButtons = document.querySelectorAll('#edit-btn');
+    editButtons.forEach((button) => {
+    button.addEventListener('click', handleEdit);
+});
+
+  function handleEdit(event) {
+    const postId = event.target.dataset.postid;
+
+  window.location.href = `/posts/edit/${postId}`;
+}
+
+    </script>
+  </body>
+</html>

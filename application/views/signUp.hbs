@@ -1,0 +1,202 @@
+<html class="signUp" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+    <link rel="stylesheet" type="text/css" href="../public/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Righteous&display=swap"
+      rel="stylesheet"
+    />
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+    <script defer src="../public/js/signUp.js"></script>
+    <script defer src="../public/js/alert.js"></script>
+  </head>
+  <body class="signUp">
+    <form action="#" method="post" class="logO">
+      <button type="submit"><a href="/login">Login</a></button>
+    </form>
+    <header>
+      <h1>Sign Up user</h1>
+      {{#if (nonEmptyObject messages)}}
+        <div id="flashMess">
+          {{#if messages.error}}
+            <div class="alert-danger">{{messages.error}}</div>
+          {{/if}}
+        </div>
+      {{/if}}
+      <div class="dropdown">
+        <button class="dropbtn">
+          <img src="../public/images/menuH.png" alt="menu" class="menImg" />
+          <i class="caret-down"></i>
+        </button>
+        <div class="dropContent">
+          <nav>
+            <ul>
+              <li>
+                <a href="/" class="a1">Main Page</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div class="menButton">
+        <input type="checkbox" id="active" />
+        <label for="active" class="menu-btn"><span></span></label>
+        <label for="active" class="close"></label>
+        <div class="wrapper">
+          <nav>
+            <ul>
+              <li>
+                <a href="/" class="a1">Main Page</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <div class="info">
+        <form
+          action="/users/SignUp"
+          id="fm"
+          method="post"
+          enctype="application/x-www-form-urlencoded"
+        >
+          <div class="fBlock">
+            <div class="userData">
+              <label for="username">Username:</label>
+              <div class="block">
+                <input type="text" name="username" id="username" required />
+              </div>
+                <div class="usCheck" id="uche">
+                  <p id="usCheck1">Minimum 3 characters.<br /></p>
+                  <p id="usCheck2">Begins with a letter.</p>
+                </div>
+              <label for="email">Email:</label>
+              <input type="email" name="email" id="email" required />
+              <label for="password">Password:</label>
+              <div class="block">
+                <input type="password" name="password" id="password" required />
+                <span class="password-toggle" onclick="togglePasswordVisibility()" id="password-toggle">
+                  <span id="toggle-text">Show</span>
+                </span>
+              </div>
+                <div class="passCheck" id="pche">
+                  <p id="passCheck1">Minimum 8 characters.<br /></p>
+                  <p id="passCheck2">At least one special character.</p>
+                </div>
+              <label for="password2">Confirm password:</label>
+
+              <div class="block">
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  id="password2"
+                  required
+                />
+<span class="password-toggle2" onclick="togglePasswordVisibility2()" id="password-toggle">
+                  <span id="toggle-text2">Show</span>
+                </span>              </div>
+                <div class="confCheck" id="cche">
+                  <p id="confCheck1">Passwords need to match.<br /></p>
+                </div>
+            </div>
+            <div class="avatarrr">
+              <h2 style="font-size: 1.3rem; margin: 0.4rem 0">Choose your
+                avatar:
+              </h2>
+              <div class="images">
+                    <input type="hidden" name="avatar" id="avatar" value="" required>
+
+                <img src="/public/images/avatar1.png" alt="Kai" data-avatar="public/images/avatar1.png"/>
+                <img src="/public/images/avatar2.png" alt="Lux" data-avatar="public/images/avatar2.png"/>
+                <img src="/public/images/avatar3.png" alt="Rune" data-avatar="public/images/avatar3.png"/>
+                <img src="/public/images/avatar4.png" alt="Nia" data-avatar="public/images/avatar4.png"/>
+                <img src="/public/images/avatar5.png" alt="Nova" data-avatar="public/images/avatar5.png"/>
+                <img src="/public/images/avatar6.png" alt="Finn" data-avatar="public/images/avatar6.png"/>
+                <img src="/public/images/avatar7.png" alt="Remy" data-avatar="public/images/avatar7.png"/>
+                <img src="/public/images/avatar8.png" alt="Milo" data-avatar="public/images/avatar8.png"/>
+                <img src="/public/images/avatar9.png" alt="Ember" data-avatar="public/images/avatar9.png"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="checks">
+            <label for="check">Acknowledge I am 13+ years old.</label>
+            <input type="checkbox" name="check" id="check" required />
+          </div>
+
+          <div class="checks">
+            <label for="check2">Accept TOS and Privacy rules.</label>
+            <input type="checkbox" name="check2" id="check2" required />
+          </div>
+
+          <a href="#" class="TOS">Read TOS and Privacy rules</a>
+
+          <div class="sub">
+            <input type="submit" name="submit" id="submit" value="Create"/>
+          </div>
+        </form>
+      </div>
+    </main>
+    {{> footer}}
+    <script>
+function togglePasswordVisibility() {
+  const passwordInput = document.getElementById('password');
+  const passwordToggle = document.getElementById('password-toggle');
+  const toggleText = document.getElementById('toggle-text');
+
+  if (passwordInput.type === 'password') {
+    passwordInput.type = 'text';
+    toggleText.textContent = 'Hide';
+  } else {
+    passwordInput.type = 'password';
+    toggleText.textContent = 'Show';
+  }
+}
+
+function togglePasswordVisibility2() {
+  const passwordInput = document.getElementById('password2');
+  const passwordToggle = document.getElementById('password-toggle2');
+  const toggleText = document.getElementById('toggle-text2');
+
+  if (passwordInput.type === 'password') {
+    passwordInput.type = 'text';
+    toggleText.textContent = 'Hide';
+  } else {
+    passwordInput.type = 'password';
+    toggleText.textContent = 'Show';
+  }
+}
+
+
+      document.addEventListener('DOMContentLoaded', function () {
+    const images = document.querySelectorAll('.images img');
+    const avatarInput = document.getElementById('avatar');
+
+    images.forEach(function (image) {
+      image.addEventListener('click', function () {
+        // Remove active class from all images
+        images.forEach(function (img) {
+          img.classList.remove('active');
+        });
+
+        // Add active class to the clicked image
+        this.classList.add('active');
+
+        // Set the value of the avatar input field
+        const avatarFilename = this.getAttribute('data-avatar');
+        avatarInput.value = avatarFilename;
+      });
+    });
+  });
+    </script>
+  </body>
+</html>
