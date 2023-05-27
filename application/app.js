@@ -8,10 +8,28 @@ const logger = require("morgan");
 const handlebars = require("express-handlebars");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const postsRouter = require("./routes/posts");
+const comentsRouter = require("./routes/comments");
+
 const sessions = require("express-session");
 const MySQLStore = require("express-mysql-session")(sessions);
 const flash = require("express-flash");
 const app = express();
+const userIdEquals = function (userId1, userId2, options) {
+  if (userId1 === userId2) {
+    return options.fn(this);
+  } else {
+    return options.inverse(this);
+  }
+};
+
+const private = function (value, options) {
+  if (value === 1) {
+    return options.fn(this);
+  } else {
+    return options.inverse(this);
+  }
+};
 
 app.engine(
   "hbs",
@@ -21,10 +39,18 @@ app.engine(
     extname: ".hbs", //expected file extension for handlebars files
     defaultLayout: "layout", //default layout for app, general template for all pages in app
     helpers: {
-      nonEmptyObject: function (obj) { 
-        return obj && obj.constructor === Object && Object .keys(obj).length > 0; 
-      }
-    }, //adding new helpers to handlebars for extra functionality
+      nonEmptyObject: function (obj) {
+        return obj && obj.constructor === Object && Object.keys(obj).length > 0;
+      },
+      formatDateString: function (dateString) {
+        return new Date(dateString).toLocaleString("en-us", {
+          dateStyle: "long",
+          timeStyle: "medium"
+        });
+      },
+      userIdEquals: userIdEquals,
+      private: private,
+    },
   })
 );
 
@@ -38,7 +64,6 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser("csc317 secret key"));
-
 app.use(favicon(__dirname + "/public/favicon.ico"));
 app.use("/public", express.static(path.join(__dirname, "public")));
 
@@ -64,6 +89,8 @@ app.use(function (req, res, next) {
 
 app.use("/", indexRouter); // route middleware from ./routes/index.js
 app.use("/users", usersRouter); // route middleware from ./routes/users.js
+app.use("/posts", postsRouter);
+app.use("/comments", comentsRouter);
 
 /**
  * Catch all route, if we get to here then the
